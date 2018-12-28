@@ -1,0 +1,36 @@
+(executable
+  (name Math_test)
+  (modules Math_test)
+  (libraries alcotest math))
+
+(executable
+  (name Math_proptest)
+  (modules Math_proptest)
+  (libraries alcotest qcheck qcheck-alcotest math))
+
+(executable
+  (name Math_test_async)
+  (modules Math_test_async)
+  (libraries
+    alcotest alcotest-lwt
+    lwt lwt.unix
+    math))
+
+(alias
+  (name runprops)
+  (action (run %{exe:Math_proptest.exe}))
+  (deps
+    Math_proptest.exe))
+
+(alias
+  (name runtest-sync)
+  (action (run %{exe:Math_test.exe}))
+  (deps
+    Math_test.exe))
+  
+(alias
+  (name runtest-async)
+  (action (run %{exe:Math_test_async.exe}))
+  (deps
+    Math_test_async.exe))
+  
